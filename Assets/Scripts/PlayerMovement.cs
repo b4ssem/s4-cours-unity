@@ -26,6 +26,11 @@ public class PlayerMovement : MonoBehaviour // Correction de l'orthographe (Mouv
     private bool jumpReleased = false;
 
     private bool isFacingRight = true;
+    [SerializeField]
+    private int nbMaxJumpsAllowed = 2;
+    [SerializeField]
+    private int nbJumps = 0;
+    private bool wasGrounded = false;
 
     private bool IsTouchingGround()
 {
@@ -49,19 +54,26 @@ public class PlayerMovement : MonoBehaviour // Correction de l'orthographe (Mouv
             jumpReleased = true;
         }
         flip();
+        // Update
+        
+        if (isGrounded && !wasGrounded)
+        {
+            nbJumps = 0;
+        }
+        wasGrounded = isGrounded;
+ 
     }
 
     private void FixedUpdate()
     {
+        if (nbJumps < nbMaxJumpsAllowed && jumpRequested)
+        {
+            Jump();
+        }
         // Les calculs physiques se font toujours dans FixedUpdate
         Move();
         isGrounded = IsTouchingGround();
         
-
-        if (jumpRequested && isGrounded)
-        {
-            Jump();
-        }
 
         if (jumpReleased && rb.linearVelocityY > 0)
         {
@@ -81,6 +93,7 @@ public class PlayerMovement : MonoBehaviour // Correction de l'orthographe (Mouv
             rb.linearVelocityX,
             jumpForce
         );
+        nbJumps++;
     }
 
     private void flip()
@@ -108,5 +121,6 @@ public class PlayerMovement : MonoBehaviour // Correction de l'orthographe (Mouv
             );
         }
     }
+ 
 }
 
