@@ -123,4 +123,3 @@ public class PlayerMovement : MonoBehaviour // Correction de l'orthographe (Mouv
     }
  
 }
-

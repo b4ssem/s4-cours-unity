@@ -194,9 +194,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   rb: {fileID: 3775033310351737013}
   moveSpeed: 2
-  obstacleCheckRadius: 0.15
   listObstacles:
     serializedVersion: 2
     m_Bits: 0
   obstacleLengthDetection: 0.15
   bc: {fileID: 7168763903253107122}
+  obstacleCheckRadius: 0.2
