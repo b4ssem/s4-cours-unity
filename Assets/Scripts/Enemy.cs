@@ -31,6 +31,10 @@ public class Enemy : MonoBehaviour
                 bounce,
                 ForceMode2D.Impulse);
             Die();
+        } else
+        {
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            playerHealth.TakeDamage(5);
         }
     }
 
