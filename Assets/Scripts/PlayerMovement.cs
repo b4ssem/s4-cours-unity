@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour // Correction de l'orthographe (Mouv
     private bool isGrounded;
 
     [SerializeField]
+    private Animator animator;
+
+    [SerializeField]
     private int jumpForce = 10;
 
     private bool jumpRequested = false;
@@ -61,6 +64,7 @@ public class PlayerMovement : MonoBehaviour // Correction de l'orthographe (Mouv
             nbJumps = 0;
         }
         wasGrounded = isGrounded;
+        Animations();
  
     }
 
@@ -110,6 +114,14 @@ public class PlayerMovement : MonoBehaviour // Correction de l'orthographe (Mouv
         // Correction de la faute de frappe "lenearVelocity" -> "linearVelocity"
         rb.linearVelocity = new Vector2(moveDirectionX * moveSpeed, rb.linearVelocity.y);
     }
+
+        void Animations()
+    {
+        Debug.Log(rb.linearVelocityX);
+        animator.SetFloat("VelocityX", Mathf.Abs(rb.linearVelocityX));
+        animator.SetFloat("VelocityY", Mathf.Abs(rb.linearVelocityY));
+    }
+ 
 
     private void OnDrawGizmos()
     {
