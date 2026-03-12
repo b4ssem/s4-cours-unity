@@ -117,9 +117,11 @@ public class PlayerMovement : MonoBehaviour // Correction de l'orthographe (Mouv
 
         void Animations()
     {
-        Debug.Log(rb.linearVelocityX);
+        Debug.Log(rb.linearVelocityY);
         animator.SetFloat("VelocityX", Mathf.Abs(rb.linearVelocityX));
-        animator.SetFloat("VelocityY", Mathf.Abs(rb.linearVelocityY));
+        animator.SetFloat("VelocityY", rb.linearVelocityY);
+        animator.SetBool("IsGrounded",isGrounded);
+        
     }
  
 
