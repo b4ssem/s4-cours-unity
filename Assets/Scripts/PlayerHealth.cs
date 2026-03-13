@@ -7,9 +7,15 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField]
-    private int currentLifePoints;
+    private IntVariable currentLifePoints;
     [SerializeField]
-    private int maxLifePoints;
+    private IntVariable maxLifePoints;
+
+    [SerializeField]
+    private VoidEventChannel onTakeDamage;
+
+    [SerializeField]
+    private VoidEventChannel onPlayerDeath;
 
     private bool isInvulnerable = false;
 
@@ -17,15 +23,12 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer sr;
 
     [SerializeField]
-    private HealthBar healthBar;
-
-    [SerializeField]
     private TextMeshProUGUI currentLifePointsText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        currentLifePoints = maxLifePoints;
-        currentLifePointsText.SetText(currentLifePoints.ToString());
+        currentLifePoints.CurrentValue = maxLifePoints.CurrentValue;
+        currentLifePointsText.SetText(currentLifePoints.CurrentValue.ToString());
     }
 
     public void TakeDamage(int damage = 1)
@@ -36,14 +39,13 @@ public class PlayerHealth : MonoBehaviour
         }
         isInvulnerable = true;
         StartCoroutine(InvulnerableDuration());
-        currentLifePoints = Mathf.Clamp(currentLifePoints-damage,0,maxLifePoints);
-        currentLifePointsText.SetText(currentLifePoints.ToString());
-
-        healthBar.SetHealth((float) currentLifePoints / maxLifePoints);
-
-        if (currentLifePoints == 0)
+        currentLifePoints.CurrentValue = Mathf.Clamp(currentLifePoints.CurrentValue-damage,0,maxLifePoints.CurrentValue);
+        currentLifePointsText.SetText(currentLifePoints.CurrentValue.ToString());
+        onTakeDamage.Raise();
+        if (currentLifePoints.CurrentValue == 0)
         {
             Debug.Log("Game over");
+            onPlayerDeath.Raise();
         }
     }
 

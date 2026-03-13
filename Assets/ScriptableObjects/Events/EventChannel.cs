@@ -10,3 +10,15 @@ public abstract class EventChannel<T> : ScriptableObject
         OnEventRaised?.Invoke(value);
     }
 }
+
+
+
+public abstract class EventChannel : ScriptableObject
+{
+    public UnityAction OnEventRaised;
+
+    public void Raise()
+    {
+        OnEventRaised?.Invoke();
+    }
+}
